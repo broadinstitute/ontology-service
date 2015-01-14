@@ -1,5 +1,5 @@
 # .travis.yml
-language: java
+language: groovy
 
 jdk:
   - oraclejdk8
