@@ -12,7 +12,7 @@ Ontology Match Service
 * Groovy Version: 2.3.6+
 
 ##Build Status
-<a href='https://travis-ci.org/broadinstitute/orsp-service'><img src='https://travis-ci.org/broadinstitute/ontology-service.svg'></a>
+<a href='https://travis-ci.org/broadinstitute/ontology-service'><img src='https://travis-ci.org/broadinstitute/ontology-service.svg'></a>
 
 ##Testing
 
