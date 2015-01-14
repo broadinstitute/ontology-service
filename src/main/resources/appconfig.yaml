@@ -1,0 +1,45 @@
+defaultName: 'Ontology Match'
+
+# HTTP-specific options.
+server:
+  applicationConnectors:
+    - type: http
+      port: 8181
+  adminConnectors:
+    - type: http
+      port: 8282
+
+# Logging settings.
+logging:
+
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: INFO
+
+  # Logger-specific levels.
+  loggers:
+
+    # Sets the level for 'com.example.app' to DEBUG.
+    org.genomebridge: DEBUG
+    org.obolibrary: ERROR
+    org.obolibrary.oboformat: ERROR
+    org.obolibrary.oboformat.parser: ERROR
+    org.mindswap: ERROR
+    org.mindswap.pellet: ERROR
+    org.mindswap.pellet.jena: ERROR
+    com.hp: ERROR
+    com.hp.hpl: ERROR
+    com.hp.hpl.jena: ERROR
+    com.hp.hpl.jena.util: ERROR
+
+  appenders:
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
+    - type: file
+      currentLogFilename: log/application.log
+      threshold: ALL
+      archive: true
+      archivedLogFilenamePattern: log/application-%d.log
+      archivedFileCount: 5
+      timeZone: UTC

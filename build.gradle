@@ -1,0 +1,139 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+mainClassName = 'org.genomebridge.ontology.match.OntologyMatchApplication'
+
+project.ext {
+    dropwizardVersion = '0.7.1'
+    dropWizardConfig = './src/main/resources/appconfig.yaml'
+}
+
+run {
+    args 'server', dropWizardConfig
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile "io.dropwizard:dropwizard-core:${dropwizardVersion}"
+    compile "io.dropwizard:dropwizard-assets:${dropwizardVersion}"
+    compile "io.dropwizard:dropwizard-views:${dropwizardVersion}"
+    compile "io.dropwizard:dropwizard-views-freemarker:${dropwizardVersion}"
+    compile 'com.hubspot.dropwizard:dropwizard-guice:0.7.2'
+    compile 'org.codehaus.gpars:gpars:1.2.1'
+
+    compile 'io.fastjson:boon:0.7'
+//    compile 'com.google.code.gson:gson:2.3.1'
+
+    // Markdown processing:
+    compile 'org.commonjava.googlecode.markdown4j:markdown4j:2.2-cj-1.0'
+
+    compile ("io.dropwizard:dropwizard-testing:${dropwizardVersion}") {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+    }
+
+    compile ('com.sun.jersey:jersey-client:1.18.1')  {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+    }
+
+    compile ('org.codehaus.groovy:groovy-all:2.3.7')  {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+    }
+
+    compile ('ch.qos.logback:logback-classic:1.1.2') {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+    }
+
+    // Ontology
+    compile ('net.sourceforge.owlapi:owlapi-distribution:3.4.10') {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+    }
+
+    compile ('com.hp.hpl.jena:jena:2.6.3') {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+    }
+
+    compile ('com.github.ansell.pellet:pellet-core:2.3.6-ansell') {
+        exclude group: "msv", module: "xsdlib"
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+    }
+
+    compile ('com.github.ansell.pellet:pellet-owlapiv3:2.3.6-ansell') {
+        exclude group: "com.github.ansell.owlapi", module: "owlapi-api"
+        exclude group: "com.github.ansell.owlapi", module: "owlapi-impl"
+        exclude group: "com.github.ansell.owlapi", module: "owlapi-parsers"
+        exclude group: "com.github.ansell.owlapi", module: "owlapi-tools"
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+        exclude group: "stax", module: "stax-api"
+        exclude group: "msv", module: "xsdlib"
+    }
+
+    testCompile ('junit:junit:4.12')  {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+    }
+
+    testCompile ('org.mockito:mockito-all:1.10.8')  {
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "log4j", module: "log4j"
+    }
+
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+        attributes 'Built-By': System.getProperty('user.name')
+        attributes 'Build-Jdk': System.getProperty('java.version')
+        attributes 'BUILD_NUMBER': System.env.BUILD_NUMBER ?: 'LOCAL'
+        attributes 'BUILD_URL': System.env.BUILD_URL ?: 'LOCAL'
+        attributes 'GIT_COMMIT': System.env.GIT_COMMIT ?: 'LOCAL'
+        attributes 'GIT_BRANCH': System.env.GIT_BRANCH ?: 'LOCAL'
+        attributes 'Implementation-Title': project.name
+        attributes 'Implementation-Version': project.version
+        attributes 'Implementation-Vendor-Id': project.group
+    }
+}
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}
