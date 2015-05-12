@@ -18,6 +18,7 @@ import org.junit.Test
 import static org.junit.Assert.assertTrue
 
 /**
+ * This class only tests for proper json formats using the custom json parser for UseRestrictions.
  *
  * Created: 12/13/14
  *

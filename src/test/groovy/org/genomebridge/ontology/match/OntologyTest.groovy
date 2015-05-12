@@ -15,7 +15,7 @@ import org.genomebridge.ontology.match.api.ResearchPurpose
 import org.genomebridge.ontology.match.api.model.And
 import org.genomebridge.ontology.match.api.model.Named
 import org.genomebridge.ontology.match.api.model.UseRestriction
-import org.genomebridge.ontology.match.ontology.OntologyManager
+import org.genomebridge.ontology.match.ontology.OntologyMatcher
 import org.junit.Test
 
 import static org.junit.Assert.assertTrue
@@ -34,7 +34,7 @@ class OntologyTest {
 
     private static final String MOCK_OWNER = "mock owner"
     private static final String MOCK_RESEARCHER = "mock researcher"
-    private static final OntologyManager ONTOLOGY = new OntologyManager()
+    private static final OntologyMatcher ONTOLOGY = new OntologyMatcher()
 
     @Test
     void testMatchRestriction() {

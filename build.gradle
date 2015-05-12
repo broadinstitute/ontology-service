@@ -1,9 +1,10 @@
 buildscript {
     repositories {
+//        mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.1'
     }
 }
 
@@ -76,7 +77,7 @@ dependencies {
         exclude group: "log4j", module: "log4j"
     }
 
-    compile ('com.hp.hpl.jena:jena:2.6.3') {
+    compile ('org.apache.jena:jena:2.13.0') {
         exclude group: "org.slf4j", module: "slf4j-log4j12"
         exclude group: "org.slf4j", module: "slf4j-api"
         exclude group: "log4j", module: "log4j"

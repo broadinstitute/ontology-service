@@ -17,7 +17,7 @@ import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import io.dropwizard.views.View
 import org.genomebridge.ontology.match.api.model.UseRestriction
-import org.genomebridge.ontology.match.ontology.OntologyManager
+import org.genomebridge.ontology.match.ontology.OntologyMatcher
 import org.genomebridge.ontology.match.utils.UseRestrictionParser
 import org.genomebridge.ontology.match.views.IndexView
 
@@ -34,11 +34,11 @@ import javax.ws.rs.core.Response
 @Path('/')
 class MatchResource {
 
-    private OntologyManager ontologyManager
+    private OntologyMatcher ontologyMatcher
 
     @Inject
-    public MatchResource(@Named("ontologyManager") OntologyManager ontologyManager) {
-        this.ontologyManager = ontologyManager
+    public MatchResource(@Named("ontologyMatcher") OntologyMatcher ontologyMatcher) {
+        this.ontologyMatcher = ontologyMatcher
     }
 
     @GET
@@ -73,7 +73,7 @@ class MatchResource {
             if (!errors.isEmpty()) {
                 return ResourceHelper.badRequest(errors)
             } else {
-                def valid = ontologyManager.match(useRestrictions.get(0), useRestrictions.get(1))
+                def valid = ontologyMatcher.match(useRestrictions.get(0), useRestrictions.get(1))
                 return ResourceHelper.okResponse(valid)
             }
         } catch (Exception e) {

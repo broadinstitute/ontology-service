@@ -12,7 +12,7 @@ package org.genomebridge.ontology.match
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
 import groovy.transform.CompileStatic
-import org.genomebridge.ontology.match.ontology.OntologyManager
+import org.genomebridge.ontology.match.ontology.OntologyMatcher
 
 import javax.inject.Named
 
@@ -25,15 +25,15 @@ import javax.inject.Named
 @CompileStatic
 class OntologyModule extends AbstractModule {
 
-    private final OntologyManager ontologyManager = new OntologyManager()
+    private final OntologyMatcher ontologyMatcher = new OntologyMatcher()
 
     @Override
     protected void configure() {}
 
     @Provides
-    @Named("ontologyManager")
-    public OntologyManager provideOntologyManager() {
-        ontologyManager
+    @Named("ontologyMatcher")
+    public OntologyMatcher provideOntologyMatcher() {
+        ontologyMatcher
     }
 
 }
