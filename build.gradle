@@ -19,7 +19,7 @@ targetCompatibility = 1.8
 mainClassName = 'org.genomebridge.ontology.match.OntologyMatchApplication'
 
 project.ext {
-    dropwizardVersion = '0.7.1'
+    dropwizardVersion = '0.8.1'
     dropWizardConfig = './src/main/resources/appconfig.yaml'
 }
 
@@ -34,16 +34,16 @@ repositories {
 dependencies {
 
     compile "io.dropwizard:dropwizard-core:${dropwizardVersion}"
+    compile "io.dropwizard:dropwizard-jersey:${dropwizardVersion}"
     compile "io.dropwizard:dropwizard-assets:${dropwizardVersion}"
     compile "io.dropwizard:dropwizard-views:${dropwizardVersion}"
     compile "io.dropwizard:dropwizard-views-freemarker:${dropwizardVersion}"
-    compile 'com.hubspot.dropwizard:dropwizard-guice:0.7.2'
+    compile 'com.hubspot.dropwizard:dropwizard-guice:0.8.1.0'
     compile 'org.codehaus.gpars:gpars:1.2.1'
     compile 'io.fastjson:boon:0.7'
 
     // Markdown processing:
     compile 'org.commonjava.googlecode.markdown4j:markdown4j:2.2-cj-1.0'
-    compile 'com.sun.jersey:jersey-client:1.18.1'
     compile 'org.codehaus.groovy:groovy-all:2.4.3'
     compile ('ch.qos.logback:logback-classic:1.1.2') {
         exclude group: "org.slf4j", module: "slf4j-log4j12"

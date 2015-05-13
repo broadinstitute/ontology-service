@@ -10,18 +10,19 @@
 package org.genomebridge.ontology.match
 
 import com.google.common.io.Resources
-import com.sun.jersey.api.client.Client
-import com.sun.jersey.api.client.ClientResponse
-import com.sun.jersey.api.client.filter.LoggingFilter
-import groovy.json.JsonBuilder
 import groovy.transform.CompileStatic
 import io.dropwizard.testing.junit.DropwizardAppRule
 import org.genomebridge.ontology.match.api.model.And
 import org.genomebridge.ontology.match.api.model.Named
 import org.genomebridge.ontology.match.api.model.UseRestriction
+import org.glassfish.jersey.client.ClientConfig
+import org.glassfish.jersey.filter.LoggingFilter
 import org.junit.ClassRule
 import org.junit.Test
 
+import javax.ws.rs.client.Client
+import javax.ws.rs.client.ClientBuilder
+import javax.ws.rs.client.Entity
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
@@ -48,33 +49,30 @@ class MatchResourceTest {
     @SuppressWarnings("GroovyAssignabilityCheck")
     @ClassRule
     public static final DropwizardAppRule<OntologyMatchConfiguration> RULE =
-            new DropwizardAppRule<OntologyMatchConfiguration>(OntologyMatchApplication.class, resourceFilePath("test-app-config.yml"))
+            new DropwizardAppRule<>(OntologyMatchApplication.class, resourceFilePath("test-app-config.yml"))
 
     private static final String LOCAL_APPLICATION_URL = "http://localhost:%d/"
 
-    protected static Client getClient() {
-        Client client = new Client()
-        client.addFilter(new LoggingFilter())
-        client
+    private static Response postEntity(UseRestriction purpose, UseRestriction consent) {
+        ClientConfig config = new ClientConfig()
+        Client client = ClientBuilder.newClient(config)
+        client.register(new LoggingFilter())
+        client.
+                target(String.format(LOCAL_APPLICATION_URL, RULE.getLocalPort())).
+                request(MediaType.APPLICATION_JSON).
+                accept(MediaType.APPLICATION_JSON).
+                post(Entity.json([purpose, consent]))
     }
 
     @Test
     public void testMatch() {
-        Client client = getClient()
         // Paranoid Schizophrenia
         def purpose = new Named(name: "http://purl.obolibrary.org/obo/DOID_1229")
         // Schizophrenia (parent class)
         def consent = new Named(name: "http://purl.obolibrary.org/obo/DOID_5419")
-        def ClientResponse response = client.resource(
-                String.format(LOCAL_APPLICATION_URL, RULE.getLocalPort())).
-                accept(MediaType.APPLICATION_JSON).
-                type(MediaType.APPLICATION_JSON).
-                post(
-                        ClientResponse.class,
-                        new JsonBuilder([purpose, consent]).toString()
-                )
+        Response response = postEntity(purpose, consent)
         assertTrue(response.status == Response.Status.OK.statusCode)
-        assertTrue(response.getEntity(Boolean.class))
+        assertTrue(response.readEntity(Boolean))
     }
 
     @Test
@@ -88,17 +86,9 @@ class MatchResourceTest {
                 new Named(name: "http://purl.obolibrary.org/obo/DOID_162"),
                 new Named(name: "http://www.genomebridge.org/ontologies/DURPO/children")
         ]))
-
-        def ClientResponse response = client.resource(
-                String.format(LOCAL_APPLICATION_URL, RULE.getLocalPort())).
-                accept(MediaType.APPLICATION_JSON).
-                type(MediaType.APPLICATION_JSON).
-                post(
-                        ClientResponse.class,
-                        new JsonBuilder([purpose, consent]).toString()
-                )
+        Response response = postEntity(purpose, consent)
         assertTrue(response.status == Response.Status.OK.statusCode)
-        assertFalse(response.getEntity(Boolean.class))
+        assertFalse(response.readEntity(Boolean))
     }
 
 }
