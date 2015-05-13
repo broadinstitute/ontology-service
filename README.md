@@ -8,7 +8,7 @@ Ontology Match Service
 
 ##Dependencies:
 * JDK 1.8
-* Gradle 2.2.1
+* Gradle 2.4
 * Groovy Version: 2.3.6+
 
 ##Build Status

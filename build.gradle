@@ -58,7 +58,7 @@ dependencies {
         exclude group: "log4j", module: "log4j"
     }
 
-    compile ('org.codehaus.groovy:groovy-all:2.3.7')  {
+    compile ('org.codehaus.groovy:groovy-all:2.4.3')  {
         exclude group: "org.slf4j", module: "slf4j-log4j12"
         exclude group: "org.slf4j", module: "slf4j-api"
         exclude group: "log4j", module: "log4j"
@@ -70,8 +70,9 @@ dependencies {
         exclude group: "log4j", module: "log4j"
     }
 
-    // Ontology
-    compile ('net.sourceforge.owlapi:owlapi-distribution:3.4.10') {
+    // Ontology. Cannot upgrade to 4.x yet.
+    // OWLManager.createOWLOntologyManager() fails to load for some reason.
+    compile ('net.sourceforge.owlapi:owlapi-distribution:3.5.2') {
         exclude group: "org.slf4j", module: "slf4j-log4j12"
         exclude group: "org.slf4j", module: "slf4j-api"
         exclude group: "log4j", module: "log4j"
