@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-//        mavenCentral()
+        mavenCentral()
         jcenter()
     }
     dependencies {
@@ -39,31 +39,13 @@ dependencies {
     compile "io.dropwizard:dropwizard-views-freemarker:${dropwizardVersion}"
     compile 'com.hubspot.dropwizard:dropwizard-guice:0.7.2'
     compile 'org.codehaus.gpars:gpars:1.2.1'
-
     compile 'io.fastjson:boon:0.7'
-//    compile 'com.google.code.gson:gson:2.3.1'
 
     // Markdown processing:
     compile 'org.commonjava.googlecode.markdown4j:markdown4j:2.2-cj-1.0'
-
-    compile ("io.dropwizard:dropwizard-testing:${dropwizardVersion}") {
-        exclude group: "org.slf4j", module: "slf4j-log4j12"
-        exclude group: "org.slf4j", module: "slf4j-api"
-        exclude group: "log4j", module: "log4j"
-    }
-
-    compile ('com.sun.jersey:jersey-client:1.18.1')  {
-        exclude group: "org.slf4j", module: "slf4j-log4j12"
-        exclude group: "org.slf4j", module: "slf4j-api"
-        exclude group: "log4j", module: "log4j"
-    }
-
-    compile ('org.codehaus.groovy:groovy-all:2.4.3')  {
-        exclude group: "org.slf4j", module: "slf4j-log4j12"
-        exclude group: "org.slf4j", module: "slf4j-api"
-        exclude group: "log4j", module: "log4j"
-    }
-
+    compile "io.dropwizard:dropwizard-testing:${dropwizardVersion}"
+    compile 'com.sun.jersey:jersey-client:1.18.1'
+    compile 'org.codehaus.groovy:groovy-all:2.4.3'
     compile ('ch.qos.logback:logback-classic:1.1.2') {
         exclude group: "org.slf4j", module: "slf4j-log4j12"
         exclude group: "org.slf4j", module: "slf4j-api"
@@ -72,48 +54,19 @@ dependencies {
 
     // Ontology. Cannot upgrade to 4.x yet.
     // OWLManager.createOWLOntologyManager() fails to load for some reason.
-    compile ('net.sourceforge.owlapi:owlapi-distribution:3.5.2') {
-        exclude group: "org.slf4j", module: "slf4j-log4j12"
-        exclude group: "org.slf4j", module: "slf4j-api"
-        exclude group: "log4j", module: "log4j"
-    }
-
-    compile ('org.apache.jena:jena:2.13.0') {
-        exclude group: "org.slf4j", module: "slf4j-log4j12"
-        exclude group: "org.slf4j", module: "slf4j-api"
-        exclude group: "log4j", module: "log4j"
-    }
-
+    compile 'net.sourceforge.owlapi:owlapi-distribution:3.5.2'
+    compile 'org.apache.jena:jena:2.13.0'
     compile ('com.github.ansell.pellet:pellet-core:2.3.6-ansell') {
         exclude group: "msv", module: "xsdlib"
-        exclude group: "org.slf4j", module: "slf4j-log4j12"
-        exclude group: "org.slf4j", module: "slf4j-api"
-        exclude group: "log4j", module: "log4j"
     }
-
     compile ('com.github.ansell.pellet:pellet-owlapiv3:2.3.6-ansell') {
-        exclude group: "com.github.ansell.owlapi", module: "owlapi-api"
-        exclude group: "com.github.ansell.owlapi", module: "owlapi-impl"
-        exclude group: "com.github.ansell.owlapi", module: "owlapi-parsers"
-        exclude group: "com.github.ansell.owlapi", module: "owlapi-tools"
-        exclude group: "org.slf4j", module: "slf4j-log4j12"
-        exclude group: "org.slf4j", module: "slf4j-api"
-        exclude group: "log4j", module: "log4j"
-        exclude group: "stax", module: "stax-api"
-        exclude group: "msv", module: "xsdlib"
-    }
-
-    testCompile ('junit:junit:4.12')  {
         exclude group: "org.slf4j", module: "slf4j-log4j12"
         exclude group: "org.slf4j", module: "slf4j-api"
         exclude group: "log4j", module: "log4j"
     }
 
-    testCompile ('org.mockito:mockito-all:1.10.8')  {
-        exclude group: "org.slf4j", module: "slf4j-log4j12"
-        exclude group: "org.slf4j", module: "slf4j-api"
-        exclude group: "log4j", module: "log4j"
-    }
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:1.10.8'
 
 }
 

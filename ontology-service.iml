@@ -138,5 +138,15 @@
     <orderEntry type="library" exported="" name="Gradle: org.slf4j:slf4j-api:1.7.6" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.6" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.felix:org.osgi.core:1.4.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.owlapi:owlapi-api:3.4.9.2-ansell" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.owlapi:owlapi-impl:3.4.9.2-ansell" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.owlapi:owlapi-parsers:3.4.9.2-ansell" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.abstract-service-loader:abstract-service-loader:0.4" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.openrdf.sesame:sesame-model:2.7.8" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.openrdf.sesame:sesame-rio-api:2.7.8" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.owlapi:owlapi-tools:3.4.9.2-ansell" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.openrdf.sesame:sesame-util:2.7.8" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: msv:xsdlib:20030225" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: stax:stax-api:1.0.1" level="project" />
   </component>
 </module>
