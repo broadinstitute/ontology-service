@@ -43,7 +43,6 @@ dependencies {
 
     // Markdown processing:
     compile 'org.commonjava.googlecode.markdown4j:markdown4j:2.2-cj-1.0'
-    compile "io.dropwizard:dropwizard-testing:${dropwizardVersion}"
     compile 'com.sun.jersey:jersey-client:1.18.1'
     compile 'org.codehaus.groovy:groovy-all:2.4.3'
     compile ('ch.qos.logback:logback-classic:1.1.2') {
@@ -56,17 +55,16 @@ dependencies {
     // OWLManager.createOWLOntologyManager() fails to load for some reason.
     compile 'net.sourceforge.owlapi:owlapi-distribution:3.5.2'
     compile 'org.apache.jena:jena:2.13.0'
-    compile ('com.github.ansell.pellet:pellet-core:2.3.6-ansell') {
-        exclude group: "msv", module: "xsdlib"
-    }
-    compile ('com.github.ansell.pellet:pellet-owlapiv3:2.3.6-ansell') {
+    compile ('com.github.ansell.pellet:pellet-jena:2.3.6-ansell') {
         exclude group: "org.slf4j", module: "slf4j-log4j12"
         exclude group: "org.slf4j", module: "slf4j-api"
         exclude group: "log4j", module: "log4j"
+        exclude group: "msv", module: "xsdlib"
     }
 
+    // Test
+    testCompile "io.dropwizard:dropwizard-testing:${dropwizardVersion}"
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-all:1.10.8'
 
 }
 

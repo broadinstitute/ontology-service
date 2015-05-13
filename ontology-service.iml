@@ -28,7 +28,6 @@
     <orderEntry type="library" exported="" name="Gradle: com.sun.jersey:jersey-client:1.18.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-classic:1.1.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.github.ansell.pellet:pellet-core:2.3.6-ansell" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.pellet:pellet-owlapiv3:2.3.6-ansell" level="project" />
     <orderEntry type="library" exported="" name="Gradle: io.dropwizard:dropwizard-util:0.7.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: io.dropwizard:dropwizard-jackson:0.7.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: io.dropwizard:dropwizard-validation:0.7.1" level="project" />
@@ -62,8 +61,6 @@
     <orderEntry type="library" exported="" name="Gradle: com.sun.jersey:jersey-core:1.18.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-core:1.1.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.github.ansell.pellet:pellet-common:2.3.6-ansell" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.pellet:pellet-query:2.3.6-ansell" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.kohsuke.metainf-services:metainf-services:1.4" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.3.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.code.findbugs:jsr305:2.0.3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: joda-time:joda-time:2.3" level="project" />
@@ -102,9 +99,7 @@
     <orderEntry type="library" exported="" name="Gradle: msv:relaxngDatatype:20030225" level="project" />
     <orderEntry type="library" exported="" name="Gradle: xerces:xercesImpl:2.10.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.hp.hpl.jena:jena:2.6.4" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.hp.hpl.jena:arq:2.8.7" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.github.ansell.pellet:pellet-jena:2.3.6-ansell" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.antlr:antlr-runtime:3.4" level="project" />
     <orderEntry type="library" exported="" name="Gradle: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.jboss.logging:jboss-logging:3.1.3.GA" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml:classmate:1.0.0" level="project" />
@@ -119,12 +114,7 @@
     <orderEntry type="library" exported="" name="Gradle: xml-apis:xml-apis:1.4.01" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.hp.hpl.jena:iri:0.8" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.ibm.icu:icu4j:3.4.4" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.codehaus.woodstox:wstx-asl:3.2.9" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.apache.lucene:lucene-core:2.3.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.antlr:stringtemplate:3.2.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: antlr:antlr:2.7.7" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.mockito:mockito-all:1.10.8" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.codehaus.groovy:groovy-all:2.4.3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.guava:guava:18.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: net.sf.trove4j:trove4j:3.0.3" level="project" />
@@ -138,15 +128,5 @@
     <orderEntry type="library" exported="" name="Gradle: org.slf4j:slf4j-api:1.7.6" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.6" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.felix:org.osgi.core:1.4.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.owlapi:owlapi-api:3.4.9.2-ansell" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.owlapi:owlapi-impl:3.4.9.2-ansell" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.owlapi:owlapi-parsers:3.4.9.2-ansell" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.abstract-service-loader:abstract-service-loader:0.4" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.openrdf.sesame:sesame-model:2.7.8" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.openrdf.sesame:sesame-rio-api:2.7.8" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.github.ansell.owlapi:owlapi-tools:3.4.9.2-ansell" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.openrdf.sesame:sesame-util:2.7.8" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: msv:xsdlib:20030225" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: stax:stax-api:1.0.1" level="project" />
   </component>
 </module>
