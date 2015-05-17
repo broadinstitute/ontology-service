@@ -3,6 +3,9 @@ package org.genomebridge.ontology.match.ontology
 import com.google.common.io.Resources
 import com.hp.hpl.jena.ontology.OntClass
 import com.hp.hpl.jena.ontology.OntModel
+import com.hp.hpl.jena.ontology.OntModelSpec
+import com.hp.hpl.jena.ontology.impl.OntModelImpl
+import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.rdf.model.ModelFactory
 import org.mindswap.pellet.jena.PelletInfGraph
 import org.mindswap.pellet.jena.PelletReasonerFactory
@@ -20,18 +23,18 @@ import static rx.Observable.create
 class OntModelProvider {
 
     private static final ExecutorService executorService = Executors.newFixedThreadPool(10)
-    private static OntModel cachedOntModel = null
 
     /**
      * This Observable does not block when subscribed to as it spawns a separate thread.
+     * See http://techblog.netflix.com/2013/02/rxjava-netflix-api.html
      *
      * @return Observable <OntModel>
      */
     public static Observable<OntModel> nonBlockingOntModel() {
-        if (cachedOntModel != null) {
+        if (cachedModel != null) {
             return create({
                 Observer<OntModel> observer ->
-                    observer.onNext(cachedOntModel)
+                    observer.onNext(getWorkingModel())
                     observer.onCompleted()
                     return Subscriptions.empty()
             })
@@ -94,8 +97,21 @@ class OntModelProvider {
             }
         }
         ((PelletInfGraph) model.getGraph()).classify()
-        cachedOntModel = model
+        cacheModel(model)
         model
+    }
+
+    private static Model cachedModel
+    private static OntModelSpec cachedSpec
+
+    private static void cacheModel(OntModel model) {
+        cachedModel = ModelFactory.createModelForGraph(model.getGraph())
+        cachedSpec = model.getSpecification()
+    }
+
+    private static OntModel getWorkingModel() {
+        println("Create new model from cache")
+        new OntModelImpl(cachedSpec, cachedModel)
     }
 
     private static URL getURL(String str) {
