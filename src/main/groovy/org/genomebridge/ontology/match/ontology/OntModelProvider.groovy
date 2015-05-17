@@ -19,24 +19,36 @@ import static rx.Observable.create
 
 class OntModelProvider {
 
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(10)
+    private static OntModel cachedOntModel = null
+
     /**
      * This Observable does not block when subscribed to as it spawns a separate thread.
      *
      * @return Observable <OntModel>
      */
     public static Observable<OntModel> nonBlockingOntModel() {
-        return create({
-            Observer<OntModel> observer ->
-                ExecutorService executorService = Executors.newSingleThreadExecutor()
-                executorService.execute(new Runnable() {
-                    public void run() {
-                        observer.onNext(buildOntModel())
-                        observer.onCompleted()
-                    }
-                })
-                executorService.shutdown()
-                return Subscriptions.empty()
-        })
+        if (cachedOntModel != null) {
+            return create({
+                Observer<OntModel> observer ->
+                    observer.onNext(cachedOntModel)
+                    observer.onCompleted()
+                    return Subscriptions.empty()
+            })
+        } else {
+            return create({
+                Observer<OntModel> observer ->
+                    executorService.submit({
+                        try {
+                            observer.onNext(buildOntModel())
+                            observer.onCompleted()
+                        } catch (Exception e) {
+                            observer.onError(e)
+                        }
+                    })
+                    return Subscriptions.empty()
+            })
+        }
     }
 
     private static OntModel buildOntModel() {
@@ -82,6 +94,7 @@ class OntModelProvider {
             }
         }
         ((PelletInfGraph) model.getGraph()).classify()
+        cachedOntModel = model
         model
     }
 
