@@ -144,5 +144,6 @@
     <orderEntry type="library" exported="" name="Gradle: com.squarespace.jersey2-guice:jersey2-guice:0.10" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.inject.extensions:guice-multibindings:4.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.slf4j:slf4j-api:1.7.12" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: io.reactivex:rxjava:1.0.10" level="project" />
   </component>
 </module>

@@ -12,11 +12,8 @@ package org.genomebridge.ontology.match.ontology
 import com.hp.hpl.jena.ontology.OntClass
 import com.hp.hpl.jena.ontology.OntModel
 import groovy.util.logging.Slf4j
-import groovyx.gpars.actor.Actors
 import org.genomebridge.ontology.match.api.model.UseRestriction
 import org.semanticweb.owlapi.model.OWLOntologyCreationException
-
-import java.util.concurrent.TimeUnit
 
 /**
  *
@@ -27,18 +24,8 @@ import java.util.concurrent.TimeUnit
 @Slf4j
 class OntologyMatcher {
 
-    private final OntModel model
-
-    OntologyMatcher() {
-        this.model = OntModelProvider.buildOntModel()
-    }
-
     public Boolean match(UseRestriction purpose, UseRestriction consent) {
-        Boolean reply = matchingActor.sendAndWait(
-                new Pair(purpose: purpose, consent: consent),
-                30,
-                TimeUnit.SECONDS)
-        reply
+        matchPair(new Pair(purpose: purpose, consent: consent))
     }
 
     class Pair {
@@ -46,20 +33,11 @@ class OntologyMatcher {
         UseRestriction consent
     }
 
-    private def matchingActor = Actors.actor {
-        loop {
-            log.debug('Processing restriction matching in actor.loop')
-            react {
-                Pair pair ->
-                    reply matchPair(pair)
-            }
-        }
-    }
-
     private Boolean matchPair(Pair pair) {
         Boolean match = false
         try {
             def consentId = UUID.randomUUID().toString()
+            def model = OntModelProvider.nonBlockingOntModel().toBlocking().first()
             addNamedEquivalentClass(model, consentId, pair.consent)
             OntClass purposeClass = addNamedSubClass(model, UUID.randomUUID().toString(), pair.purpose)
             OntClass consentClass = model.getOntClass(consentId)

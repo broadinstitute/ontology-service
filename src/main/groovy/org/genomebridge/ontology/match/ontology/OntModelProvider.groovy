@@ -7,16 +7,39 @@ import com.hp.hpl.jena.rdf.model.ModelFactory
 import org.mindswap.pellet.jena.PelletInfGraph
 import org.mindswap.pellet.jena.PelletReasonerFactory
 import org.semanticweb.owlapi.apibinding.OWLManager
-import org.semanticweb.owlapi.model.IRI
-import org.semanticweb.owlapi.model.OWLAnnotationProperty
-import org.semanticweb.owlapi.model.OWLClass
-import org.semanticweb.owlapi.model.OWLOntology
-import org.semanticweb.owlapi.model.OWLOntologyManager
+import org.semanticweb.owlapi.model.*
+import rx.Observable
+import rx.Observer
+import rx.subscriptions.Subscriptions
 
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+
+import static rx.Observable.create
 
 class OntModelProvider {
 
-    public static OntModel buildOntModel() {
+    /**
+     * This Observable does not block when subscribed to as it spawns a separate thread.
+     *
+     * @return Observable <OntModel>
+     */
+    public static Observable<OntModel> nonBlockingOntModel() {
+        return create({
+            Observer<OntModel> observer ->
+                ExecutorService executorService = Executors.newSingleThreadExecutor()
+                executorService.execute(new Runnable() {
+                    public void run() {
+                        observer.onNext(buildOntModel())
+                        observer.onCompleted()
+                    }
+                })
+                executorService.shutdown()
+                return Subscriptions.empty()
+        })
+    }
+
+    private static OntModel buildOntModel() {
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager()
         OntModel model = ModelFactory.createOntologyModel(PelletReasonerFactory.THE_SPEC)
         Resources.getResource("ontologies.txt").readLines().each { line ->
@@ -58,7 +81,6 @@ class OntModelProvider {
                 }
             }
         }
-
         ((PelletInfGraph) model.getGraph()).classify()
         model
     }

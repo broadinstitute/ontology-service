@@ -41,6 +41,7 @@ dependencies {
     compile 'com.hubspot.dropwizard:dropwizard-guice:0.8.1.0'
     compile 'org.codehaus.gpars:gpars:1.2.1'
     compile 'io.fastjson:boon:0.7'
+    compile 'io.reactivex:rxjava:1.0.10'
 
     // Markdown processing:
     compile 'org.commonjava.googlecode.markdown4j:markdown4j:2.2-cj-1.0'
