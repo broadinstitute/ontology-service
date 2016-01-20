@@ -109,4 +109,3 @@ Percentage of the requests served within a certain time (ms)
 ##Developer Notes
 * Use @CompileStatic whenever possible
 * Need substantial javadocs written
-* License issues exist. Pellet is AGPL v3 while everything we do is Apache v2.
