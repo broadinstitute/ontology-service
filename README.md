@@ -2,19 +2,19 @@ Ontology Match
 ========
 Ontology Match Service
 
-##Running
+# Running
 * To test: ./gradlew test
 * To run locally (in development mode): ./gradlew run
 
-##Dependencies:
+# Dependencies:
 * JDK 1.8
 * Gradle 2.4
 * Groovy Version: 2.3.6+
 
-##Build Status
+# Build Status
 <a href='https://travis-ci.org/broadinstitute/ontology-service'><img src='https://travis-ci.org/broadinstitute/ontology-service.svg?branch=develop'></a>
 
-##Testing
+# Testing
 
 ###Example curl command
 The Match service will take as the first argument a "Research Purpose", and as the second argument, the

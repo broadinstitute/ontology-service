@@ -19,7 +19,7 @@ logging:
   loggers:
 
     # Sets the level for 'com.example.app' to DEBUG.
-    org.org.genomebridge: INFO
+    org.broadinstitute: INFO
     org.obolibrary: ERROR
     org.obolibrary.oboformat: ERROR
     org.obolibrary.oboformat.parser: ERROR

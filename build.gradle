@@ -16,7 +16,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-mainClassName = 'org.genomebridge.ontology.match.OntologyMatchApplication'
+mainClassName = 'org.broadinstitute.dsde.ontology.match.OntologyMatchApplication'
 
 project.ext {
     dropwizardVersion = '0.8.1'

@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="org.genomebridge.ontology.match.views.IndexView" -->
+<#-- @ftlvariable name="" type="org.broadinstitute.dsde.ontology.match.views.IndexView" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
