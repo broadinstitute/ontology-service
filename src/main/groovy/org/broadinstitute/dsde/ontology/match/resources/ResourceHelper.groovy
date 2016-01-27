@@ -25,28 +25,24 @@ import javax.ws.rs.core.Response
 class ResourceHelper {
 
     static Response okResponse(Object object) {
-        Response
-                .status(Response.Status.OK)
+        Response.status(Response.Status.OK)
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .entity(new JsonBuilder(object).toPrettyString())
                 .build()
     }
 
     static Response badRequest(Collection<String> errors) {
-        Response
-                .status(Response.Status.BAD_REQUEST)
+        Response.status(Response.Status.BAD_REQUEST)
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .entity(new JsonBuilder({errors: errors}).toPrettyString())
                 .build()
     }
 
     static Response serverError(Collection<String> errors) {
-        Response
-                .status(Response.Status.INTERNAL_SERVER_ERROR)
+        Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .entity(new JsonBuilder({errors: errors}).toPrettyString())
                 .build()
     }
-
 
 }

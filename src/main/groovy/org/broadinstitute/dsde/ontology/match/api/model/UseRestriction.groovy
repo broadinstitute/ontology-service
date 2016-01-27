@@ -23,7 +23,9 @@ import groovy.transform.CompileStatic
 @CompileStatic
 abstract class UseRestriction {
 
-    public abstract OntClass createOntologicalRestriction(OntModel model);
+    public abstract OntClass createOntologicalRestriction(OntModel model)
+
+    UseRestriction() {}
 
     public String toPrettyString() {
         new JsonBuilder(this).toPrettyString()

@@ -19,7 +19,7 @@ targetCompatibility = 1.8
 mainClassName = 'org.broadinstitute.dsde.ontology.match.OntologyMatchApplication'
 
 project.ext {
-    dropwizardVersion = '0.8.1'
+    dropwizardVersion = '0.9.2'
     dropWizardConfig = './src/main/resources/appconfig.yaml'
 }
 
@@ -38,10 +38,11 @@ dependencies {
     compile "io.dropwizard:dropwizard-assets:${dropwizardVersion}"
     compile "io.dropwizard:dropwizard-views:${dropwizardVersion}"
     compile "io.dropwizard:dropwizard-views-freemarker:${dropwizardVersion}"
-    compile 'com.hubspot.dropwizard:dropwizard-guice:0.8.1.0'
+    compile 'com.hubspot.dropwizard:dropwizard-guice:0.8.4.0'
     compile 'org.codehaus.gpars:gpars:1.2.1'
-    compile 'io.fastjson:boon:0.7'
+    compile 'io.fastjson:boon:0.26'
     compile 'io.reactivex:rxjava:1.0.10'
+    compile 'com.google.code.gson:gson:2.5'
 
     // Markdown processing:
     compile 'org.commonjava.googlecode.markdown4j:markdown4j:2.2-cj-1.0'

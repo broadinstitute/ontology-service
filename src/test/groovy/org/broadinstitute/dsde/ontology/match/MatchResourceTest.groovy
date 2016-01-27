@@ -11,6 +11,7 @@ package org.broadinstitute.dsde.ontology.match
 
 import com.google.common.io.Resources
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 import io.dropwizard.testing.junit.DropwizardAppRule
 import org.broadinstitute.dsde.ontology.match.api.model.And
 import org.broadinstitute.dsde.ontology.match.api.model.Named
@@ -35,6 +36,7 @@ import static org.junit.Assert.assertTrue
  *
  * @author <a href="mailto:grushton@broadinstitute.org">grushton</a>
  */
+@Slf4j
 @CompileStatic
 class MatchResourceTest {
 

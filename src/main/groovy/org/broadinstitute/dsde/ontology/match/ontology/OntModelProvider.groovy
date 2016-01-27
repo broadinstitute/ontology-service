@@ -7,6 +7,7 @@ import com.hp.hpl.jena.ontology.OntModelSpec
 import com.hp.hpl.jena.ontology.impl.OntModelImpl
 import com.hp.hpl.jena.rdf.model.Model
 import com.hp.hpl.jena.rdf.model.ModelFactory
+import groovy.util.logging.Slf4j
 import org.mindswap.pellet.jena.PelletInfGraph
 import org.mindswap.pellet.jena.PelletReasonerFactory
 import org.semanticweb.owlapi.apibinding.OWLManager
@@ -20,6 +21,7 @@ import java.util.concurrent.Executors
 
 import static rx.Observable.create
 
+@Slf4j
 class OntModelProvider {
 
     private static final ExecutorService executorService = Executors.newFixedThreadPool(10)
@@ -32,14 +34,14 @@ class OntModelProvider {
      */
     public static Observable<OntModel> nonBlockingOntModel() {
         if (cachedModel != null) {
-            return create({
+            create({
                 Observer<OntModel> observer ->
                     observer.onNext(getWorkingModel())
                     observer.onCompleted()
-                    return Subscriptions.empty()
+                    Subscriptions.empty()
             })
         } else {
-            return create({
+            create({
                 Observer<OntModel> observer ->
                     executorService.submit({
                         try {
@@ -49,7 +51,7 @@ class OntModelProvider {
                             observer.onError(e)
                         }
                     })
-                    return Subscriptions.empty()
+                    Subscriptions.empty()
             })
         }
     }
@@ -105,12 +107,13 @@ class OntModelProvider {
     private static OntModelSpec cachedSpec
 
     private static void cacheModel(OntModel model) {
+        log.info("Setting cached model components")
         cachedModel = ModelFactory.createModelForGraph(model.getGraph())
         cachedSpec = model.getSpecification()
     }
 
     private static OntModel getWorkingModel() {
-        println("Create new model from cache")
+        log.info("Create new model from cached components")
         new OntModelImpl(cachedSpec, cachedModel)
     }
 

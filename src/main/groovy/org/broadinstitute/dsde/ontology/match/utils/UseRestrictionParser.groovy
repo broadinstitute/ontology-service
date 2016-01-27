@@ -11,8 +11,8 @@ package org.broadinstitute.dsde.ontology.match.utils
 
 import groovy.json.JsonBuilder
 import groovy.util.logging.Slf4j
+import org.boon.json.JsonFactory
 import org.boon.json.ObjectMapper
-import org.boon.json.ObjectMapperFactory
 import org.broadinstitute.dsde.ontology.match.api.model.And
 import org.broadinstitute.dsde.ontology.match.api.model.Everything
 import org.broadinstitute.dsde.ontology.match.api.model.Named
@@ -22,7 +22,6 @@ import org.broadinstitute.dsde.ontology.match.api.model.Only
 import org.broadinstitute.dsde.ontology.match.api.model.Or
 import org.broadinstitute.dsde.ontology.match.api.model.Some
 import org.broadinstitute.dsde.ontology.match.api.model.UseRestriction
-import org.broadinstitute.dsde.ontology.match.api.model.*
 
 /**
  *
@@ -34,7 +33,7 @@ import org.broadinstitute.dsde.ontology.match.api.model.*
 class UseRestrictionParser {
 
     public static UseRestriction parse(Object it) {
-        ObjectMapper mapper = new ObjectMapperFactory().create()
+        ObjectMapper mapper = JsonFactory.create()
         def objAsString = new JsonBuilder(it).toString()
         log.info("Parsing object: " + it)
         switch (it?.type) {

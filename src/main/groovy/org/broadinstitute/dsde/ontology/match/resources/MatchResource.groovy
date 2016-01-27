@@ -55,7 +55,7 @@ class MatchResource {
         def parser = new JsonSlurper()
         List<String> errors = new ArrayList<>()
         if (!postData) {
-            return ResourceHelper.badRequest(Collections.singletonList("Please provide two valid owl expressions"))
+            return ResourceHelper.badRequest(Collections.singletonList("Please provide two valid data use expressions"))
         }
         try {
             List<UseRestriction> useRestrictions = new ArrayList<>()
@@ -68,7 +68,7 @@ class MatchResource {
                 }
             }
             if (!useRestrictions || useRestrictions.isEmpty() || useRestrictions.size() != 2) {
-                errors.add("Please provide two valid owl expressions")
+                errors.add("Please provide two valid data use expressions")
             }
             if (!errors.isEmpty()) {
                 return ResourceHelper.badRequest(errors)
