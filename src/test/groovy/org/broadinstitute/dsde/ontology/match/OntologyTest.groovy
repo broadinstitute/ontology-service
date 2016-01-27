@@ -25,8 +25,6 @@ import static org.junit.Assert.assertTrue
 
 /**
  *
- * TODO: Incorporate all of the tests in the original broadinstitute-ontology project.
- *
  * Created: 12/14/14
  *
  * @author <a href="mailto:grushton@broadinstitute.org">grushton</a>
@@ -43,7 +41,7 @@ class OntologyTest {
         def purpose = new ResearchPurpose(
                 id: UUID.randomUUID().toString(),
                 researcher: MOCK_RESEARCHER,
-                purpose: new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/methods_research")
+                purpose: new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/methods_research")
         )
         def consent = new Consent(
                 id: UUID.randomUUID().toString(),
@@ -60,14 +58,14 @@ class OntologyTest {
         def purpose = new ResearchPurpose(
                 id: UUID.randomUUID().toString(),
                 researcher: MOCK_RESEARCHER,
-                purpose: new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/methods_research")
+                purpose: new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/methods_research")
         )
         def consent = new Consent(
                 id: UUID.randomUUID().toString(),
                 owner: MOCK_OWNER,
                 requiresManualReview: false,
                 restriction: new Not(
-                        operand: new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/methods_research"))
+                        operand: new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/methods_research"))
         )
         def match = ONTOLOGY.match(purpose.purpose, consent.restriction)
         assertFalse("We should NOT have a match between consent and purpose", match)
@@ -78,7 +76,7 @@ class OntologyTest {
         def purpose = new ResearchPurpose(
                 id: UUID.randomUUID().toString(),
                 researcher: MOCK_RESEARCHER,
-                purpose: new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/aggregate_research")
+                purpose: new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/aggregate_research")
         )
         def consent = new Consent(
                 id: UUID.randomUUID().toString(),
@@ -95,14 +93,14 @@ class OntologyTest {
         def purpose = new ResearchPurpose(
                 id: UUID.randomUUID().toString(),
                 researcher: MOCK_RESEARCHER,
-                purpose: new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/aggregate_research")
+                purpose: new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/aggregate_research")
         )
         def consent = new Consent(
                 id: UUID.randomUUID().toString(),
                 owner: MOCK_OWNER,
                 requiresManualReview: false,
                 restriction: new Not(
-                        operand: new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/aggregate_research"))
+                        operand: new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/aggregate_research"))
         )
         def match = ONTOLOGY.match(purpose.purpose, consent.restriction)
         assertFalse("We should NOT have a match between consent and purpose", match)
@@ -138,7 +136,7 @@ class OntologyTest {
                 researcher: MOCK_RESEARCHER,
                 purpose: new And(new ArrayList<UseRestriction>([
                         new Named(name: "http://purl.obolibrary.org/obo/DOID_5041"),
-                        new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/Non_profit")
+                        new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/Non_profit")
                 ]))
         )
 
@@ -148,7 +146,7 @@ class OntologyTest {
                 requiresManualReview: false,
                 restriction: new And(new ArrayList<UseRestriction>([
                         new Named(name: "http://purl.obolibrary.org/obo/DOID_162"),
-                        new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/children")
+                        new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/children")
                 ]))
         )
 

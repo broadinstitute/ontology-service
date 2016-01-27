@@ -81,12 +81,12 @@ class MatchResourceTest {
     public void testMisMatch() {
         def purpose = new And(new ArrayList<UseRestriction>([
                 new Named(name: "http://purl.obolibrary.org/obo/DOID_5041"),
-                new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/Non_profit")
+                new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/Non_profit")
         ]))
 
         def consent = new And(new ArrayList<UseRestriction>([
                 new Named(name: "http://purl.obolibrary.org/obo/DOID_162"),
-                new Named(name: "http://www.broadinstitute.org/ontologies/DURPO/children")
+                new Named(name: "http://www.broadinstitute.org/ontologies/DUOS/children")
         ]))
         Response response = postEntity(purpose, consent)
         assertTrue(response.status == Response.Status.OK.statusCode)

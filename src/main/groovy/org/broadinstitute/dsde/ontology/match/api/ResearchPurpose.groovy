@@ -28,4 +28,12 @@ class ResearchPurpose {
     UseRestriction purpose
     String[] sensitiveTags
 
+    ResearchPurpose() {}
+
+    ResearchPurpose(UseRestriction purpose) {
+        id = UUID.randomUUID().toString()
+        researcher = UUID.randomUUID().toString()
+        this.purpose = purpose
+        sensitiveTags = []
+    }
 }

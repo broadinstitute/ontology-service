@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#">
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    ]>
+
+<rdf:RDF
+        xmlns="http://www.ga4gh.org/ontologies/ADA-M#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xmlns:owl="http://www.w3.org/2002/07/owl#"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xml:base="http://www.ga4gh.org/ontologies/ADA-M">
+
+    <owl:Ontology rdf:about="http://www.ga4gh.org/ontologies/ADA-M">
+        <rdfs:label rdf:datatype="&xsd;string">Automatable and Discovery Access Matrix Ontology</rdfs:label>
+        <rdfs:comment xml:lang="en">
+            This ADA Task Team is working to create tools that can increasingly automate the discovery and access of
+            biomedical resources (e.g. data, biological specimens, subjects, software). Core to this is the development
+            of an “Automatable Discovery and Access Matrix (ADA-M)”, via which consent and other conditions of use can
+            be represented in a standardized, computer-readable manner. The ADA Task Team is co-chaired by
+            Anthony Brookes (University of Leicester) and John Wilbanks (SAGE Bionetworks), and coordinated by me
+            (Emily Kirby, P3G), and involves over 40 other international leaders with expertise in data sharing issues.
+        </rdfs:comment>
+        <owl:versionInfo xml:lang="en">
+            version 0.2. The current version of ADA-M is herein attached as document
+            ADAM_v0.2_19Jan2016_Distributed.xlsx, along with a guidance document ADAM_introductiontext_21Jan2016.pdf.
+        </owl:versionInfo>
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">version 0.2</owl:versionInfo>
+        <owl:imports rdf:resource="http://www.berkeleybop.org/ontologies/doid.owl"/>
+        <owl:imports rdf:resource="http://aims.fao.org/aos/geopolitical.owl"/>
+    </owl:Ontology>
+
+    <!-- Organizations -->
+
+    <owl:Class rdf:about="#organization">
+        <rdfs:label rdf:datatype="&xsd;string">Organization</rdfs:label>
+    </owl:Class>
+
+    <owl:Class rdf:about="#nonProfitOrganization">
+        <rdfs:label rdf:datatype="&xsd;string">Non-Profit Organization</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#organization"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="#p3g">
+        <rdfs:label rdf:datatype="&xsd;string">Public Population Projects in Genomics and Society</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#nonProfitOrganization"/>
+        <rdfs:subClassOf rdf:resource="http://www.fao.org/countryprofiles/geoinfo/geopolitical/resource/Canada"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="#BroadInstitute">
+        <rdfs:label rdf:datatype="&xsd;string">The Broad Institute</rdfs:label>
+        <rdfs:comment rdf:datatype="&xsd;string">The Broad Institute brings together a diverse group of individuals
+            from across its partner institutions — undergraduate and graduate students, postdoctoral fellows,
+            professional scientists, administrative professionals, and academic faculty.</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="#nonProfitOrganization"/>
+        <rdfs:subClassOf rdf:resource="http://www.fao.org/countryprofiles/geoinfo/geopolitical/resource/United_States_of_America"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="#profitOrganization">
+        <rdfs:label rdf:datatype="&xsd;string">Profit Organization</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#organization"/>
+    </owl:Class>
+
+    <owl:Class rdf:about="#Genentech">
+        <rdfs:label rdf:datatype="&xsd;string">Genentech</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#profitOrganization"/>
+        <rdfs:subClassOf rdf:resource="http://www.fao.org/countryprofiles/geoinfo/geopolitical/resource/United_States_of_America"/>
+    </owl:Class>
+
+</rdf:RDF>

@@ -28,4 +28,13 @@ class Consent {
     Boolean requiresManualReview
     UseRestriction restriction
 
+    Consent() {}
+
+    Consent(UseRestriction restriction) {
+        id = UUID.randomUUID().toString()
+        owner = UUID.randomUUID().toString()
+        requiresManualReview = false
+        this.restriction = restriction
+    }
+
 }
