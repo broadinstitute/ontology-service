@@ -1,1 +1,5 @@
 # Ontology Services
+
+```
+./gradlew run
+```
