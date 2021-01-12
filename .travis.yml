@@ -1,9 +1,0 @@
-# .travis.yml
-language: groovy
-
-jdk:
-  - oraclejdk8
-
-branches:
-  only:
-    - develop
