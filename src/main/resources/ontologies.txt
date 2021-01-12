@@ -1,3 +1,0 @@
-ada-m.owl
-data-use.owl
-doid.obo
