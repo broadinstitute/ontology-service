@@ -3,10 +3,8 @@ package org.broadinstitute.dsp.ontology.services;
 import io.micronaut.configuration.picocli.PicocliRunner;
 import io.micronaut.context.ApplicationContext;
 
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
 
 @Command(name = "ontology", description = "...",
         mixinStandardHelpOptions = true)
@@ -24,5 +22,12 @@ public class OntologyCommand implements Runnable {
         if (verbose) {
             System.out.println("Hi!");
         }
+
+        // runs the config file
+        ApplicationContext context = ApplicationContext.run(ApplicationContext.class);
+        OntologyConfiguration config = context.getBean(OntologyConfiguration.class);
+        // print the version
+        System.out.println(config.getVersion());
+
     }
 }

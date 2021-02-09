@@ -1,3 +1,4 @@
 micronaut:
   application:
     name: ontology
+    version: 0.1
