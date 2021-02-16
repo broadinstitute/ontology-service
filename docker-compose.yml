@@ -1,19 +1,22 @@
 version: '3.7'
 services:
   app:
+    build:
+      context: .
     image: gradle:6.8.2-jdk11
     container_name: ontology
     depends_on:
       - es
     ports:
-      - "8180:8180" # application
+      - "8080:8080" # application
       - "7777:7777" # debugger
     volumes:
       - ./:/opt/target:ro
-    entrypoint: ["/opt/target/gradlew", "run"]
   es:
     image: library/elasticsearch:7.10.1
     container_name: es
     ports:
       - 9200:9200
       - 9300:9300
+    environment:
+      - discovery.type=single-node

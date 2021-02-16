@@ -27,7 +27,7 @@ public class OntologyCommand implements Runnable {
         ApplicationContext context = ApplicationContext.run(ApplicationContext.class);
         OntologyConfiguration config = context.getBean(OntologyConfiguration.class);
         // print the version
-        System.out.println(config.getVersion());
+        System.out.println("ontology-service version: " + config.getVersion());
 
     }
 }

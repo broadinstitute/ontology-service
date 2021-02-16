@@ -2,3 +2,12 @@ micronaut:
   application:
     name: ontology
     version: 0.1
+storeOntology:
+  bucketSubdirectory: ontology
+  configurationFileName: /configuration
+elasticSearch:
+  servers:
+    - elasticsearch5a1.dsde-dev.broadinstitute.org
+    - elasticsearch5a2.dsde-dev.broadinstitute.org
+    - elasticsearch5a3.dsde-dev.broadinstitute.org
+  indexName: ontology
