@@ -2,7 +2,7 @@
 #RUN gradle build
 # TODO: figure out how to build gradle project here before copying files over
 
-FROM openjdk:15-alpine
+FROM us.gcr.io/broad-dsp-gcr-public/base/jre:15-alpine
 WORKDIR /home/app
 COPY build/layers/libs /home/app/libs
 COPY build/layers/resources /home/app/resources
