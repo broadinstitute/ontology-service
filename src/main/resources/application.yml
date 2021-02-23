@@ -1,3 +1,11 @@
 micronaut:
   application:
     name: ontology
+    version: 0.1
+storeOntology:
+  bucketSubdirectory: ontology
+  configurationFileName: /configuration
+elasticSearch:
+  servers:
+    - es
+  indexName: local-ontology

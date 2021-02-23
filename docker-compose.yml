@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  app:
+    build:
+      context: .
+    image: gradle:6.8.2-jdk11
+    container_name: ontology
+    depends_on:
+      - es
+    ports:
+      - "8080:8080" # application
+      - "7777:7777" # debugger
+    volumes:
+      - ./:/opt/target:ro
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+    ports:
+      - "9200:9200"
+    volumes:
+      - ../data:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
