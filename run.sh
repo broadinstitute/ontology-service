@@ -26,3 +26,4 @@ docker run -v "${PWD}/scripts":/working/scripts -v "${PWD}/build":/working/build
 
 echo "Composing the elasticsearch container..."
 docker-compose up --build --remove-orphans
+

@@ -36,7 +36,10 @@ public class IndexOntologyService implements AutoCloseable {
      * @throws IOException The exception
      */
     public void indexOntologies(List<StreamRec> streamRecList) throws IOException {
-        utils.checkIndexWithRetry(client, indexName, 10);
+        if (!utils.checkIndexWithRetry(client, indexName, 10)) {
+            throw new IOException("Unable to create index");
+        }
+
         try {
             for (StreamRec streamRec : streamRecList) {
                 // Deprecate everything that might already exist for this ontology file
