@@ -2,7 +2,9 @@ package org.broadinstitute.dsp.ontology.http.cloudstore;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.gax.paging.Page;
+import com.google.api.services.storage.model.ObjectAccessControl;
 import com.google.auth.oauth2.ServiceAccountCredentials;
+import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
@@ -15,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -121,6 +124,18 @@ public class GCSService {
         byte[] bytes = IOUtils.toByteArray(content);
         BlobId blobId = BlobId.of(config.getBucket(), fileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(mediaType).build();
+        Blob blob = storage.create(blobInfo, bytes);
+        return blob.getBlobId();
+    }
+
+    public BlobId storeOntologyDocument(InputStream content, String mediaType, String fileName)
+            throws IOException {
+        byte[] bytes = IOUtils.toByteArray(content);
+        BlobId blobId = BlobId.of(config.getBucket(), fileName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                .setContentType(mediaType)
+                .setCacheControl("private")
+                .setAcl(Arrays.asList(Acl.newBuilder(Acl.User.ofAllUsers(), Acl.Role.READER).build())).build();
         Blob blob = storage.create(blobInfo, bytes);
         return blob.getBlobId();
     }

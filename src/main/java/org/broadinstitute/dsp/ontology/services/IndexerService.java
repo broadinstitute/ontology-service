@@ -9,10 +9,8 @@ import java.util.List;
 
 public interface IndexerService {
 
-    Response saveAndIndex(List<StreamRec> streamRecList) throws  IOException;
+    List<StreamRec> saveAndIndex(List<StreamRec> streamRecList) throws  IOException;
 
-    List<HashMap> getIndexedFiles() throws IOException;
-
-    Response deleteOntologiesByType(String fileURL) throws IOException;
+    //Response deleteOntologiesByType(String fileURL) throws IOException;
 
 }

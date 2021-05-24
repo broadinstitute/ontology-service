@@ -41,6 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,7 +65,7 @@ public class IndexerUtils {
               IRI_FILTERS.stream().anyMatch(f -> owlClass.getIRI().toString().contains(f));
     }
 
-    void checkIndex(RestClient client, String indexName) {
+    void checkIndex(RestClient client, String indexName) throws IOException {
         try {
             RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
             builder.addHeader(jsonHeader.getName(), jsonHeader.getValue());
@@ -81,10 +82,28 @@ public class IndexerUtils {
                 client.performRequest(request);
             } catch (IOException ioe) {
                 logger.error("Exception creating index: " + indexName + ": " + ioe.getMessage());
+                throw ioe;
             }
         } catch (IOException e) {
             logger.error("Exception checking for index: " + indexName + ": " + e.getMessage());
+            throw e;
         }
+    }
+
+    public Boolean checkIndexWithRetry(RestClient client, String indexName, Integer retries) {
+        for (Integer attempts = 0; attempts < retries; attempts++){
+            try {
+                TimeUnit.SECONDS.sleep(5);
+                checkIndex(client, indexName);
+                return true;
+            } catch (InterruptedException ie) {
+                System.out.println("Interrupted");
+            } catch (IOException ioe) {
+                System.out.println("Failed to connect: " + ioe.getMessage());
+            }
+        }
+
+        return false;
     }
 
     /**
