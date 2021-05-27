@@ -38,3 +38,7 @@ In order to run the app, there is a shell script that can easily be run into the
 ```
 ./run.sh -c path/to/config.json
 ```
+
+### Testing your index
+To test your local connection, run elastic search queries against localhost:
+http://localhost:9200/{index name}/_search?q=apnea
