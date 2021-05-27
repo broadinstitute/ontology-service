@@ -1,6 +1,5 @@
 package org.broadinstitute.dsp.ontology.services;
 
-import io.dropwizard.lifecycle.Managed;
 import org.broadinstitute.dsp.ontology.http.configurations.ElasticSearchConfiguration;
 import org.broadinstitute.dsp.ontology.http.models.StreamRec;
 import org.broadinstitute.dsp.ontology.http.models.Term;
@@ -12,17 +11,14 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
-public class IndexOntologyService implements Managed {
+public class IndexOntologyService implements AutoCloseable {
 
     private final String indexName;
     private IndexerUtils utils = new IndexerUtils();
     private RestClient client;
 
     @Override
-    public void start() throws Exception { }
-
-    @Override
-    public void stop() throws Exception {
+    public void close() throws Exception {
         if (client != null) {
             client.close();
         }
@@ -40,7 +36,10 @@ public class IndexOntologyService implements Managed {
      * @throws IOException The exception
      */
     public void indexOntologies(List<StreamRec> streamRecList) throws IOException {
-        utils.checkIndex(client, indexName);
+        if (!utils.checkIndexWithRetry(client, indexName, 10)) {
+            throw new IOException("Unable to create index");
+        }
+
         try {
             for (StreamRec streamRec : streamRecList) {
                 // Deprecate everything that might already exist for this ontology file
@@ -67,5 +66,4 @@ public class IndexOntologyService implements Managed {
         utils.bulkDeprecateTerms(client, indexName, ontologyType);
         return true;
     }
-
 }

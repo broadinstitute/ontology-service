@@ -2,7 +2,9 @@ package org.broadinstitute.dsp.ontology.services;
 
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpResponseException;
+import com.google.cloud.storage.BlobId;
 import org.broadinstitute.dsp.ontology.http.cloudstore.CloudStore;
+import org.broadinstitute.dsp.ontology.http.cloudstore.GCSService;
 import org.broadinstitute.dsp.ontology.http.enumeration.OntologyTypes;
 import org.broadinstitute.dsp.ontology.http.models.StreamRec;
 
@@ -19,13 +21,13 @@ import java.util.List;
  */
 public class StoreOntologyService   {
 
-    private final CloudStore store;
+    private final GCSService gcsService;
     private final String bucketSubdirectory;
     private final String configurationFileName;
     private final String jsonExtension = ".json";
 
-    public StoreOntologyService(CloudStore store, String bucketSubdirectory, String configurationFileName) {
-        this.store = store;
+    public StoreOntologyService(GCSService gcsService, String bucketSubdirectory, String configurationFileName) {
+        this.gcsService = gcsService;
         this.bucketSubdirectory = bucketSubdirectory;
         this.configurationFileName = configurationFileName;
     }
@@ -35,10 +37,10 @@ public class StoreOntologyService   {
         String type = MediaType.APPLICATION_JSON;
         try {
             String url_suffix =  bucketSubdirectory + configurationFileName + jsonExtension ;
-            store.postStorageDocument(inputStream,
+            gcsService.storeDocument(inputStream,
                   type,
                   url_suffix);
-        }catch (IOException | GeneralSecurityException e) {
+        }catch (IOException e) {
             throw new InternalServerErrorException("Problem with storage service. (Error 10)");
         }
     }
@@ -48,10 +50,10 @@ public class StoreOntologyService   {
             if (srec.getAtLeastOneOntologyIndexed()) {
                 try {
                     String url_suffix = bucketSubdirectory + "/" + OntologyTypes.getValue(srec.getOntologyType()) + "/" + srec.getFileName();
-                    srec.setUrl(store.postOntologyDocument(srec.getStream(),
+                    srec.setBlobId(gcsService.storeOntologyDocument(srec.getStream(),
                           srec.getFileType(),
                           url_suffix));
-                }catch (IOException | URISyntaxException | GeneralSecurityException e) {
+                }catch (IOException e) {
                     throw new InternalServerErrorException("Problem with storage service. (Error 20)");
                 }
             }
@@ -61,8 +63,8 @@ public class StoreOntologyService   {
 
     public String retrieveConfigurationFile (){
         try {
-            HttpResponse response = store.getStorageDocument(store.generateURLForDocument(bucketSubdirectory + configurationFileName + jsonExtension).toString());
-            return response.parseAsString();
+            String response = gcsService.getDocument(BlobId.of(this.bucketSubdirectory, configurationFileName).toString()).toString();
+            return response;
         } catch (Exception e) {
             if (e instanceof HttpResponseException && ((HttpResponseException) e).getStatusCode() == 404) {
                 return null;
@@ -72,17 +74,9 @@ public class StoreOntologyService   {
         }
     }
 
-    public HttpResponse retrieveFile(String fileUrl){
-        try {
-            return store.getStorageDocument(fileUrl);
-        } catch (Exception e) {
-            throw new InternalError("Problem with storage service. (Error 40)");
-        }
-    }
-
     public void  deleteFile(String fileUrl){
         try {
-            store.deleteStorageDocument(fileUrl);
+            gcsService.deleteDocument(fileUrl);
         }catch (Exception e) {
             throw new InternalError("Problem with storage service. (Error 50)");
         }

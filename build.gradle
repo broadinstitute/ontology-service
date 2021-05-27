@@ -33,6 +33,7 @@ dependencies {
     implementation("net.sourceforge.owlapi:owlapi-distribution:5.1.17")
     implementation("io.dropwizard:dropwizard-core:2.0.18")
     implementation("org.apache.commons:commons-configuration2:2.7")
+    implementation("com.google.code.gson:gson:2.8.6")
     runtimeOnly("ch.qos.logback:logback-classic")
     testImplementation("io.micronaut:micronaut-http-client")
 }

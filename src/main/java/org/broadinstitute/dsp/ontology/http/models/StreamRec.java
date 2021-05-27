@@ -1,5 +1,7 @@
 package org.broadinstitute.dsp.ontology.http.models;
 
+import com.google.cloud.storage.BlobId;
+
 import java.io.InputStream;
 
 /**
@@ -21,6 +23,8 @@ public class StreamRec {
     private String url;
 
     private Boolean atLeastOneOntologyIndexed;
+
+    private BlobId blobId;
 
     public StreamRec(InputStream stream, String ontologyType, String prefix, String fileType, String fileName){
         this.stream = stream;
@@ -78,6 +82,10 @@ public class StreamRec {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public BlobId getBlobId() { return blobId; }
+
+    public void setBlobId(BlobId blobId) { this.blobId = blobId; }
 
     public Boolean getAtLeastOneOntologyIndexed() {
         return atLeastOneOntologyIndexed;

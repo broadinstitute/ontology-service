@@ -69,4 +69,8 @@ build/
 # Ignore Gradle GUI config
 gradle-app.setting
 
+src/main/resources/ontologies
+data/
+configs/
 
+.DS_Store
