@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: .
-    image: gradle:6-jdk11-alpine
+    image: gradle:6-jdk11
     container_name: ontology
     depends_on:
       - es
