@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: .
-    image: gradle:6-jdk11
+    image: gradle:8-jdk17
     container_name: ontology
     depends_on:
       - es

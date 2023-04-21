@@ -1,6 +1,6 @@
 plugins {
-    id("com.github.johnrengelman.shadow") version "6.1.0"
-    id("io.micronaut.application") version "1.2.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id 'io.micronaut.application' version '3.7.8'
 }
 
 version = "0.1"
@@ -8,7 +8,6 @@ group = "org.broadinstitute.dsp.ontology.services"
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 micronaut {
@@ -27,13 +26,13 @@ dependencies {
     implementation("io.micronaut.picocli:micronaut-picocli")
     implementation("javax.ws.rs:javax.ws.rs-api:2.0")
     implementation("com.google.inject:guice:4.2.3")
-    implementation("com.google.api-client:google-api-client:1.31.2")
-    implementation("com.google.cloud:google-cloud-storage:1.113.9")
+    implementation("com.google.api-client:google-api-client:2.2.0")
+    implementation("com.google.cloud:google-cloud-storage:2.22.0")
     implementation("org.elasticsearch.client:elasticsearch-rest-client:7.10.2")
-    implementation("net.sourceforge.owlapi:owlapi-distribution:5.1.17")
-    implementation("io.dropwizard:dropwizard-core:2.0.18")
-    implementation("org.apache.commons:commons-configuration2:2.7")
-    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("net.sourceforge.owlapi:owlapi-distribution:5.5.0")
+    implementation("io.dropwizard:dropwizard-core:2.1.6")
+    implementation("org.apache.commons:commons-configuration2:2.9.0")
+    implementation("com.google.code.gson:gson:2.10.1")
     runtimeOnly("ch.qos.logback:logback-classic")
     testImplementation("io.micronaut:micronaut-http-client")
 }
@@ -44,6 +43,6 @@ application {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("11")
-    targetCompatibility = JavaVersion.toVersion("11")
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
 }
