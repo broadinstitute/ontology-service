@@ -1,14 +1,25 @@
-#FROM gradle:6.8.2-jdk11
-#RUN ./gradlew build
-# TODO: figure out how to build gradle project here before copying files over
-FROM us.gcr.io/broad-dsp-gcr-public/base/jre:15-alpine
+FROM gradle:6-jdk11 as builder
 
+RUN mkdir -p /home/app
 WORKDIR /home/app
-COPY build/layers/libs /home/app/libs
-COPY build/layers/resources /home/app/resources
-COPY build/layers/application.jar /home/app/ontology.jar
-COPY build/layers/index-config.json /home/app/index-config.json
-COPY build/layers/resources/ontologies /home/app/ontologies
+COPY build.gradle build.gradle
+COPY gradle gradle
+COPY gradlew gradlew
+COPY gradlew.bat gradlew.bat
+COPY gradle.properties gradle.properties
+COPY src src
+COPY settings.gradle settings.gradle
+RUN ./gradlew build --debug
+
+FROM us.gcr.io/broad-dsp-gcr-public/base/jre:11-debian
+
+RUN mkdir -p /home/app
+WORKDIR /home/app
+COPY configs/config.json index-config.json
+COPY --from=builder /home/app/build/layers/libs libs
+COPY --from=builder /home/app/build/layers/resources resources
+COPY --from=builder /home/app/build/layers/application.jar ontology.jar
+COPY --from=builder /home/app/build/layers/resources/ontologies ontologies
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/home/app/ontology.jar"]
+ENTRYPOINT ["java", "-jar", "ontology.jar"]
