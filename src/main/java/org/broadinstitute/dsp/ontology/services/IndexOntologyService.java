@@ -43,7 +43,6 @@ public class IndexOntologyService implements AutoCloseable {
         try {
             for (StreamRec streamRec : streamRecList) {
                 // Deprecate everything that might already exist for this ontology file
-                utils.bulkDeprecateTerms(client, indexName, streamRec.getOntologyType());
                 Collection<Term> terms = utils.generateTerms(streamRec);
                 Boolean successfulUpload = utils.bulkUploadTerms(client, indexName, terms);
                 streamRec.setAtLeastOneOntologyIndexed(successfulUpload);
