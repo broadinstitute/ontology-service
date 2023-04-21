@@ -9,7 +9,7 @@ COPY gradlew.bat gradlew.bat
 COPY gradle.properties gradle.properties
 COPY src src
 COPY settings.gradle settings.gradle
-RUN ./gradlew build --debug
+RUN ./gradlew build
 
 FROM us.gcr.io/broad-dsp-gcr-public/base/jre:11-debian
 
