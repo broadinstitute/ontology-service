@@ -11,6 +11,4 @@ public interface IndexerService {
 
     List<StreamRec> saveAndIndex(List<StreamRec> streamRecList) throws  IOException;
 
-    //Response deleteOntologiesByType(String fileURL) throws IOException;
-
 }

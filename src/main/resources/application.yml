@@ -2,10 +2,21 @@ micronaut:
   application:
     name: ontology
     version: 0.1
-storeOntology:
-  bucketSubdirectory: ontology
-  configurationFileName: /configuration
+
 elasticSearch:
   servers:
-    - es
-  indexName: local-ontology
+    - localhost
+  indexName: ontology-local
+
+ontologyFiles:
+  files:
+    -
+      name: doid.owl
+      type: disease
+      prefix:
+      fileType: OWL
+    -
+      name: data-use.owl
+      type: organization
+      prefix:
+      fileType: OWL
