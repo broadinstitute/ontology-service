@@ -52,7 +52,7 @@ To test your local connection, run elastic search queries against localhost (be 
 
 1. Spin up a local ES index:
 ```
-docker run -p 9200:9200 -v data:/usr/share/elasticsearch/data -e discovery.type=single-node -e xpack.security.enabled=false -it docker.elastic.co/elasticsearch/elasticsearch:5.4.0
+docker run -p 9200:9200 -v ${PWD}/data:/usr/share/elasticsearch/data -e discovery.type=single-node -e xpack.security.enabled=false -it docker.elastic.co/elasticsearch/elasticsearch:5.4.0
 ```
  
 2. Update the ES component of the application config (`src/main/resources/application.yml`) to run against local instance:
