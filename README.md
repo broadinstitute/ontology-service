@@ -2,7 +2,7 @@
 This application is used to build ElasticSearch indices in order to test different ontology files and the terms that are created from them. The application is provided a config file and a list of ontology files to run against. A local Elasticsearch container is spun up for queries to be run against and tested.
 
 ### Config
-The service builds indices based off of a config file that lives in `src/main/resources/application.yml`.  The config contains the name of the index, the server host names minus http and port (the server name will be elastic if running against the local elastic docker container), and the list of files to index.
+The service builds indices based off of a config file that lives in `src/main/resources/application.yml`.  The config contains the name of the index, the server host names minus http and port (the server name will be localhost if running against the local elastic docker container), and the list of files to index.
 
 Copy/download all files to your local machine. Place them into the `src/main/resources/ontologies/` directory where they will be included with the gradle build. When running, all files are copied into the docker container running the app to be processed.
 
