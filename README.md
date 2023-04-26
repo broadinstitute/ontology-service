@@ -46,7 +46,7 @@ when complete.
 
 ### Testing your index
 To test your local connection, run elastic search queries against localhost (be sure to modify the index name to match your configuration):
-[http://localhost:9200/ontology-local/_search?q=apnea](http://localhost:9200/ontology-local/_search?q=apnea). To maintain the elastic search index data generated betweenr runs, create a local `data` directory that will be re-used between ES runs.
+[http://localhost:9200/ontology-local/_search?q=apnea](http://localhost:9200/ontology-local/_search?q=apnea). To maintain the elastic search index data generated between runs, create a local `data` directory that will be re-used.
 
 ### Running locally with a local ES server
 
