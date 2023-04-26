@@ -1,14 +1,14 @@
 package org.broadinstitute.dsp.ontology.http.configurations;
 
-import java.util.List;
-import javax.validation.constraints.NotEmpty;
+import io.micronaut.context.annotation.ConfigurationProperties;
 
+import java.util.List;
+
+@ConfigurationProperties("elasticSearch")
 public class ElasticSearchConfiguration {
 
-    @NotEmpty
     private String indexName;
 
-    @NotEmpty
     private List<String> servers;
 
     public List<String> getServers() {

@@ -1,11 +1,11 @@
 package org.broadinstitute.dsp.ontology.services;
 
+import com.google.gson.Gson;
 import io.micronaut.configuration.picocli.PicocliRunner;
 import io.micronaut.context.ApplicationContext;
-
 import org.broadinstitute.dsp.ontology.http.configurations.ElasticSearchConfiguration;
+import org.broadinstitute.dsp.ontology.http.configurations.OntologyFileConfiguration;
 import org.broadinstitute.dsp.ontology.http.enumeration.OntologyTypes;
-import org.broadinstitute.dsp.ontology.http.models.IndexFile;
 import org.broadinstitute.dsp.ontology.http.models.StreamRec;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -13,11 +13,8 @@ import picocli.CommandLine.Option;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Command(name = "ontology", description = "...",
         mixinStandardHelpOptions = true)
@@ -38,46 +35,35 @@ public class OntologyCommand implements Runnable {
 
         // runs the config file
         ApplicationContext context = ApplicationContext.run(ApplicationContext.class);
-        OntologyConfiguration config = context.getBean(OntologyConfiguration.class);
-        // print the version
-        System.out.println("ontology-service version: " + config.getVersion());
+        OntologyFileConfiguration fileConfig = context.getBean(OntologyFileConfiguration.class);
+        ElasticSearchConfiguration esConfig = context.getBean(ElasticSearchConfiguration.class);
+        IndexOntologyService indexOntologyService = new IndexOntologyService(esConfig);
+        IndexerServiceImpl service = new IndexerServiceImpl(indexOntologyService);
 
+        System.out.println(new Gson().toJson(esConfig));
+
+        List<StreamRec> ontologyStreams = fileConfig
+                .getFiles()
+                .stream()
+                .map(f -> getStreamRecFromFileName(f.name(), f.type(), f.prefix(), f.fileType()))
+                .toList();
         try {
-            IndexConfigService configService = new IndexConfigService();
-
-            List<StreamRec> streamRecList = configService.getOntologies()
-                    .stream()
-                    .map(this::getStreamRecFromOntology)
-                    .collect(Collectors.toList());
-
-            ElasticSearchConfiguration elasticConfig = new ElasticSearchConfiguration();
-            elasticConfig.setIndexName(configService.getIndexName());
-            elasticConfig.setServers(configService.getServers());
-
-            try (IndexOntologyService indexOntologyService = new IndexOntologyService(elasticConfig)){
-                IndexerServiceImpl service = new IndexerServiceImpl(indexOntologyService);
-                service.saveAndIndex(streamRecList);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        } catch (FileNotFoundException fnf) {
-            System.out.println("File Not Found");
-        } catch (IOException ioe) {
-            System.out.println("Problem reading file");
+            ontologyStreams.forEach(s -> System.out.println("Indexing stream: " + s.getFileName()));
+            service.saveAndIndex(ontologyStreams);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    private StreamRec getStreamRecFromOntology(IndexFile ontology) {
+    private StreamRec getStreamRecFromFileName(String fileName, String type, String prefix, String fileType) {
         try {
-            String ontologyType = OntologyTypes.getValue(ontology.ontologyType);
-            System.out.println("Processing file " + ontology.name);
-            File inputFile = new File("ontologies/" + ontology.name.trim());
+            System.out.println("Processing file " + fileName);
+            File inputFile = new File("src/main/resources/ontologies/" + fileName);
             InputStream stream = new FileInputStream(inputFile);
-
             return new StreamRec(stream,
-                    ontologyType,
-                    ontology.prefix,
-                    ontology.fileType,
+                    OntologyTypes.getValue(type),
+                    prefix,
+                    fileType,
                     inputFile.getName());
         } catch (FileNotFoundException fnf) {
             System.out.println("File not found");
