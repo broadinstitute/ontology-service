@@ -14,8 +14,8 @@ import java.util.List;
 public class IndexOntologyService implements AutoCloseable {
 
     private final String indexName;
-    private IndexerUtils utils = new IndexerUtils();
-    private RestClient client;
+    private final IndexerUtils utils = new IndexerUtils();
+    private final RestClient client;
 
     @Override
     public void close() throws Exception {
@@ -46,7 +46,6 @@ public class IndexOntologyService implements AutoCloseable {
                 Collection<Term> terms = utils.generateTerms(streamRec);
                 Boolean successfulUpload = utils.bulkUploadTerms(client, indexName, terms);
                 streamRec.setAtLeastOneOntologyIndexed(successfulUpload);
-
             }
         } catch (OWLOntologyCreationException | InterruptedException e) {
             throw new BadRequestException("Problem with OWL file.");

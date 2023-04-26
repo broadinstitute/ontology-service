@@ -1,9 +1,6 @@
 package org.broadinstitute.dsp.ontology.services;
 
-import static org.broadinstitute.dsp.ontology.services.ElasticSearchSupport.jsonHeader;
-
 import com.google.common.collect.Lists;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.nio.entity.NStringEntity;
@@ -30,8 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.InternalServerErrorException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +39,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.broadinstitute.dsp.ontology.services.ElasticSearchSupport.jsonHeader;
 
 /**
  * A suite of functions for handling ontology indexing functions.
@@ -97,9 +94,9 @@ public class IndexerUtils {
                 checkIndex(client, indexName);
                 return true;
             } catch (InterruptedException ie) {
-                System.out.println("Interrupted");
+                logger.error("Interrupted");
             } catch (IOException ioe) {
-                System.out.println("Failed to connect: " + ioe.getMessage());
+                logger.error("Failed to connect: " + ioe.getMessage());
             }
         }
 
@@ -115,20 +112,13 @@ public class IndexerUtils {
      * @throws OWLOntologyCreationException The OWLOntologyCreationException
      */
     public Collection<Term> generateTerms(StreamRec streamRec) throws IOException, OWLOntologyCreationException {
-        //Just to be capable of read InputStream multiple times
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        IOUtils.copy(streamRec.getStream(), baos);
-        byte[] bytes = baos.toByteArray();
-
+        logger.info("Generating Terms for file: " + streamRec.getFileName());
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        OWLOntology ontology = manager.loadOntologyFromOntologyDocument(new ByteArrayInputStream(bytes));
-        // Reset stream so it can be re-read by the storage service
-        streamRec.setStream(new ByteArrayInputStream(bytes));
-
+        OWLOntology ontology = manager.loadOntologyFromOntologyDocument(streamRec.getStream());
         OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
         OWLReasoner reasoner = reasonerFactory.createNonBufferingReasoner(ontology);
-
         Set<OWLClass> owlClasses = ontology.classesInSignature().collect(Collectors.toSet());
+        logger.info("Adding owl classes for file: " + streamRec.getFileName());
         owlClasses.addAll(ontology.
               directImports().
               flatMap(HasClassesInSignature::classesInSignature).
@@ -182,6 +172,7 @@ public class IndexerUtils {
                 term.addParent(parentClass.toStringID(), label, position);
             }
         }
+        logger.info("Generated term: " + term.toString());
         return term;
     }
 
@@ -217,7 +208,7 @@ public class IndexerUtils {
                   filter(oc -> !owlClassCache.contains(oc.toStringID())).
                   collect(Collectors.toSet());
             // Make sure all new nodes have their IDs added to the cache for future cache checking
-            owlClassCache.addAll(filteredParentSet.stream().map(OWLClass::toStringID).collect(Collectors.toList()));
+            owlClassCache.addAll(filteredParentSet.stream().map(OWLClass::toStringID).toList());
             // Finally, if we have a non-empty node, make sure it gets back into the queue
             if (!filteredParentSet.isEmpty()) {
                 filteredSets.add(filteredParentSet);

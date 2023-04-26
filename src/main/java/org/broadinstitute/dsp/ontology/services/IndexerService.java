@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface IndexerService {
 
-    List<StreamRec> saveAndIndex(List<StreamRec> streamRecList) throws  IOException;
+    void saveAndIndex(List<StreamRec> streamRecList) throws  IOException;
 
 }
