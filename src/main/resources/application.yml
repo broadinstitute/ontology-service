@@ -4,8 +4,10 @@ micronaut:
     version: 0.1
 
 elasticSearch:
+# Use localhost for iterative local development and es for docker based development
   servers:
-    - localhost
+    - es
+#    - localhost
   indexName: ontology-local
 
 ontologyFiles:

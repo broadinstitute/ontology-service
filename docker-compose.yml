@@ -8,10 +8,10 @@ services:
     depends_on:
       - es
     ports:
-      - "8080:8080" # application
       - "7777:7777" # debugger
     volumes:
-      - ./:/opt/target:ro
+      - ./src/main/resources/application.yml:/home/ontology/resources/application.yml:ro
+      - ./src/main/resources/ontologies:/home/ontology/src/main/resources/ontologies:ro
   es:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.4.0
     ports:
@@ -21,3 +21,4 @@ services:
       - ./data:/usr/share/elasticsearch/data
     environment:
       - discovery.type=single-node
+      - xpack.security.enabled=false
